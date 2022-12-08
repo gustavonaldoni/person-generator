@@ -5,7 +5,7 @@
 
 void AppendPersonToFile(Person person, FILE *file)
 {
-    file = fopen("randomPeople.txt", "a");
+    file = fopen("./randomPeople.txt", "a");
     fprintf(file, "%s,%d,%s;", person.name.content, person.age, person.job.content);
     fclose(file);
 }
@@ -23,4 +23,23 @@ void AppendPeopleToFile(Person people[], FILE *file, int maxPeople)
 void DeleteFile(char *fileName)
 {
     remove(fileName);
+}
+
+void GetPeopleFromFile(Person people[], int maxPeople, char *fileName)
+{
+    FILE *file;
+    int totalLetters = 0;
+
+    file = fopen(fileName, "r");
+
+    fseek(file, 0, SEEK_END);
+    totalLetters = (int)ftell(file);
+
+    char fileContent[totalLetters];
+
+    fseek(file, 0, SEEK_SET);
+    fgets(fileContent, totalLetters + 1, file);
+    printf("totalLetters = %d, file content = %s ======\n", totalLetters, fileContent);
+
+    fclose(file);
 }
