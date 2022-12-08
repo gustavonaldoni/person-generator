@@ -1,5 +1,3 @@
-#include "string_type.h"
-
 typedef struct
 {
     String name;

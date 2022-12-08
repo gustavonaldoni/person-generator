@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "filehandler.h": "c",
+        "raylib.h": "c",
+        "random.h": "c",
+        "stdio.h": "c"
+    }
+}

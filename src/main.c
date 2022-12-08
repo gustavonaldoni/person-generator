@@ -1,4 +1,7 @@
+#include <stdio.h>
 #include "raylib.h"
+#include "string_type.h"
+#include "person.h"
 #include "fileHandler.h"
 
 #define SCREEN_WIDTH 4 * 300

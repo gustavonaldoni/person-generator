@@ -1,3 +1,6 @@
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include "string_type.h"
 
 String stringCreate(char *string)

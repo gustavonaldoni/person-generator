@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "string_type.h"
+#include "person.h"
 #include "fileHandler.h"
 
 void AppendPersonToFile(Person person, FILE *file)
