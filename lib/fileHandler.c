@@ -39,7 +39,6 @@ void GetPeopleFromFile(Person people[], int maxPeople, char *fileName)
 
     fseek(file, 0, SEEK_SET);
     fgets(fileContent, totalLetters + 1, file);
-    printf("totalLetters = %d, file content = %s ======\n", totalLetters, fileContent);
 
     fclose(file);
 }
