@@ -29,10 +29,6 @@ int main(void)
 {
     srand(time(NULL));
 
-    String s = stringCreate("Adriano");
-    Button button;
-    CreateButton(&button, 50, GetScreenHeight() / 12 * 3, 200, 80, s);
-
     CreateRandomPeople(randomPeople, MAX_PEOPLE);
     CreateRandomPeopleMatrix(randomPeopleMatrix, randomPeople);
 
@@ -61,7 +57,6 @@ int main(void)
 
     CloseWindow();
 
-    stringDestroy(&s);
     DeleteFile(FILE_PATH);
 
     return 0;
