@@ -24,7 +24,7 @@ void CreateRandomPerson(Person *person)
 {
     int nameIndex, jobIndex;
 
-    String names[10] = {stringCreate("Joaquim"),
+    String names[20] = {stringCreate("Joaquim"),
                         stringCreate("Josué"),
                         stringCreate("Jennifer"),
                         stringCreate("Maria"),
@@ -33,9 +33,19 @@ void CreateRandomPerson(Person *person)
                         stringCreate("Rejane"),
                         stringCreate("Carlos"),
                         stringCreate("Gustavo"),
-                        stringCreate("Adriano")};
+                        stringCreate("Adriano"),
+                        stringCreate("Rafael"),
+                        stringCreate("André"),
+                        stringCreate("Homer"),
+                        stringCreate("Bart"),
+                        stringCreate("Ariana"),
+                        stringCreate("Javier"),
+                        stringCreate("Maycon"),
+                        stringCreate("Juliana"),
+                        stringCreate("Luisa"),
+                        stringCreate("Takeshi")};
 
-    String jobs[10] = {stringCreate("nurse"),
+    String jobs[20] = {stringCreate("nurse"),
                        stringCreate("doctor"),
                        stringCreate("lawyer"),
                        stringCreate("pilot"),
@@ -44,10 +54,20 @@ void CreateRandomPerson(Person *person)
                        stringCreate("detective"),
                        stringCreate("writter"),
                        stringCreate("engineer"),
-                       stringCreate("designer")};
+                       stringCreate("designer"),
+                       stringCreate("firefighter"),
+                       stringCreate("police officer"),
+                       stringCreate("teacher"),
+                       stringCreate("politician"),
+                       stringCreate("biologist"),
+                       stringCreate("model"),
+                       stringCreate("painter"),
+                       stringCreate("salesman"),
+                       stringCreate("travel agent"),
+                       stringCreate("dancer")};
 
-    nameIndex = GenerateRandomInt(0, 9);
-    jobIndex = GenerateRandomInt(0, 9);
+    nameIndex = GenerateRandomInt(0, 19);
+    jobIndex = GenerateRandomInt(0, 19);
 
     person->name = names[nameIndex];
     person->age = GenerateRandomInt(18, 70);
