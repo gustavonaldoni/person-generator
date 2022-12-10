@@ -3,6 +3,7 @@
         "filehandler.h": "c",
         "raylib.h": "c",
         "random.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "string_type.h": "c"
     }
 }

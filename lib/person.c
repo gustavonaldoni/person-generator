@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include "raylib.h"
 #include "string_type.h"
 #include "random.h"
 #include "person.h"
@@ -60,5 +61,18 @@ void CreateRandomPeople(Person people[], int maxPeople)
     for (i = 0; i < maxPeople; i++)
     {
         CreateRandomPerson(&people[i]);
+    }
+}
+
+void CreateRandomPeopleMatrix(Person peopleMatrix[5][5], Person peopleArray[])
+{
+    int i, j;
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            peopleMatrix[i][j] = peopleArray[5*i + j];
+        }
     }
 }
