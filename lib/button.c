@@ -38,8 +38,17 @@ void CalculateButtonTextPosition(Button *button)
 
 void DrawButton(Button button)
 {
+    DrawButtonShadow(button);
     DrawRectangle(button.x, button.y, button.width, button.height, button.backgroundColor);
     DrawTextEx(button.font, button.text.content, (Vector2){button.xText, button.yText}, button.fontSize, button.textSpacing, button.textColor);
+}
+
+void DrawButtonShadow(Button button)
+{
+    const int shadowSpace = 5;
+    Color shadowColor = BLACK;
+
+    DrawRectangle(button.x + shadowSpace, button.y + shadowSpace, button.width, button.height, shadowColor);
 }
 
 void CreateRandomPeopleButtonMatrix(Button buttonMatrix[5][5], Person personMatrix[5][5])

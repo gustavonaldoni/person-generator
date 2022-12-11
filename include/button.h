@@ -13,5 +13,6 @@ void CreateButton(Button *, int, int, int, int, String, Font);
 void DeleteButton(Button *);
 void CalculateButtonTextPosition(Button *);
 void DrawButton(Button);
+void DrawButtonShadow(Button);
 void CreateRandomPeopleButtonMatrix(Button [5][5], Person [5][5]);
 void DrawRandomPeopleButtonMatrix(Button [5][5]);
