@@ -27,6 +27,9 @@ Button randomPeopleButtonMatrix[MATRIX_SIZE][MATRIX_SIZE];
 
 int main(void)
 {
+    Button topLeftButton = {0};
+    int iButton = 0, jButton = 0;
+
     srand(time(NULL));
 
     CreateRandomPeople(randomPeople, MAX_PEOPLE);
@@ -36,6 +39,7 @@ int main(void)
     GetPeopleFromFile(randomPeopleCopy, MAX_PEOPLE, FILE_PATH);
 
     CreateRandomPeopleButtonMatrix(randomPeopleButtonMatrix, randomPeopleMatrix);
+    topLeftButton = randomPeopleButtonMatrix[0][0];
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Person generator");
 
@@ -44,7 +48,20 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        //printf("GetFontDefault().texture.id = %d", defaultFont.texture.id);
+        if (MouseIsInsideButtonsArea(topLeftButton, 20))
+        {
+            GetWhichButtonMouseIsOnTop(randomPeopleButtonMatrix, &iButton, &jButton);
+
+            ChangeButtonBackgroundColor(&randomPeopleButtonMatrix[iButton][jButton], YELLOW);
+            ChangeButtonTextColor(&randomPeopleButtonMatrix[iButton][jButton], BLACK);
+
+            ResetAllButtonsColorsExceptOne(randomPeopleButtonMatrix, iButton, jButton);
+        }
+
+        else
+        {
+            ResetAllButtonsColors(randomPeopleButtonMatrix);
+        }
 
         DrawCenteredText("Random people generator!", GetScreenHeight() / 12, 50.0f, DARKGRAY);
         DrawCenteredText("Please click on one person to show it's information.", GetScreenHeight() / 12 * 2, 30.0f, DARKGRAY);

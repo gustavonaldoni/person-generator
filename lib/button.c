@@ -45,7 +45,7 @@ void DrawButton(Button button)
 
 void DrawButtonShadow(Button button)
 {
-    const int shadowSpace = 5;
+    const int shadowSpace = 10;
     Color shadowColor = BLACK;
 
     DrawRectangle(button.x + shadowSpace, button.y + shadowSpace, button.width, button.height, shadowColor);
@@ -87,6 +87,85 @@ void DrawRandomPeopleButtonMatrix(Button buttonMatrix[5][5])
         for (j = 0; j < 5; j++)
         {
             DrawButton(buttonMatrix[i][j]);
+        }
+    }
+}
+
+int MouseIsInsideButtonsArea(Button topLeftButton, int buttonSpace)
+{
+    int x, y, totalWidth, totalHeight;
+    Rectangle totalArea;
+
+    x = topLeftButton.x;
+    y = topLeftButton.y;
+
+    totalWidth = 5 * topLeftButton.width + 4 * buttonSpace;
+    totalHeight = 5 * topLeftButton.height + 4 * buttonSpace;
+
+    totalArea = (Rectangle){x, y, totalWidth, totalHeight};
+
+    return CheckCollisionPointRec(GetMousePosition(), totalArea);
+}
+
+void GetWhichButtonMouseIsOnTop(Button buttonMatrix[5][5], int *iButton, int *jButton)
+{
+    int i, j;
+    Button testButton = {0};
+    Rectangle buttonRectangle = {0};
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            testButton = buttonMatrix[i][j];
+            buttonRectangle = (Rectangle){testButton.x, testButton.y, testButton.width, testButton.height};
+
+            if (CheckCollisionPointRec(GetMousePosition(), buttonRectangle))
+            {
+                *iButton = i;
+                *jButton = j;
+            }
+        }
+    }
+}
+
+void ChangeButtonBackgroundColor(Button *button, Color newBackgroundColor)
+{
+    button->backgroundColor = newBackgroundColor;
+}
+
+void ChangeButtonTextColor(Button *button, Color newTextColor)
+{
+    button->textColor = newTextColor;
+}
+
+void ResetAllButtonsColors(Button buttonMatrix[5][5])
+{
+    int i, j;
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            ChangeButtonBackgroundColor(&buttonMatrix[i][j], DARKGRAY);
+            ChangeButtonTextColor(&buttonMatrix[i][j], RAYWHITE);
+        }
+    }
+}
+
+void ResetAllButtonsColorsExceptOne(Button buttonMatrix[5][5], int iButton, int jButton)
+{
+    int i, j;
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            if (i != iButton && j != jButton)
+            {
+                ChangeButtonBackgroundColor(&buttonMatrix[i][j], DARKGRAY);
+                ChangeButtonTextColor(&buttonMatrix[i][j], RAYWHITE);
+            }
         }
     }
 }
