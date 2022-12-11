@@ -44,6 +44,8 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        //printf("GetFontDefault().texture.id = %d", defaultFont.texture.id);
+
         DrawCenteredText("Random people generator!", GetScreenHeight() / 12, 50.0f, DARKGRAY);
         DrawCenteredText("Please click on one person to show it's information.", GetScreenHeight() / 12 * 2, 30.0f, DARKGRAY);
 

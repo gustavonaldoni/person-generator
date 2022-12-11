@@ -1,14 +1,13 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "raylib.h"
 #include "string_type.h"
 #include "utils.h"
 #include "person.h"
 #include "button.h"
 
-void CreateButton(Button *button, int x, int y, int width, int height, String text)
+void CreateButton(Button *button, int x, int y, int width, int height, String text, Font font)
 {
-    int textWidth, textHeight;
-
     button->x = x;
     button->y = y;
     button->width = width;
@@ -18,12 +17,9 @@ void CreateButton(Button *button, int x, int y, int width, int height, String te
     button->textColor = RAYWHITE;
     button->fontSize = 20.0f;
     button->textSpacing = DEFAULT_FONT_SPACING;
+    button->font = font;
 
-    textWidth = MeasureTextEx(GetFontDefault(), button->text.content, button->fontSize, DEFAULT_FONT_SPACING).x;
-    textHeight = MeasureTextEx(GetFontDefault(), button->text.content, button->fontSize, DEFAULT_FONT_SPACING).y;
-
-    button->xText = button->x + (button->width - textWidth) / 2;
-    button->yText = button->y + (button->height - textHeight) / 2;
+    CalculateButtonTextPosition(button);
 }
 
 void DeleteButton(Button *button)
@@ -32,16 +28,25 @@ void DeleteButton(Button *button)
     free(button);
 }
 
+void CalculateButtonTextPosition(Button *button)
+{
+    float textWidth = 80.0f, textHeight = 20.0f;
+
+    button->xText = button->x + ((button->width - (int)textWidth) / 2);
+    button->yText = button->y + ((button->height - (int)textHeight) / 2);
+}
+
 void DrawButton(Button button)
 {
     DrawRectangle(button.x, button.y, button.width, button.height, button.backgroundColor);
-    DrawTextEx(GetFontDefault(), button.text.content, (Vector2){button.xText, button.yText}, button.fontSize, button.textSpacing, button.textColor);
+    DrawTextEx(button.font, button.text.content, (Vector2){button.xText, button.yText}, button.fontSize, button.textSpacing, button.textColor);
 }
 
 void CreateRandomPeopleButtonMatrix(Button buttonMatrix[5][5], Person personMatrix[5][5])
 {
     int i, j;
     int x, y;
+    Font defaultFont;
 
     const int buttonSpace = 20, screenSpace = 60;
     const int buttonWidth = 200, buttonHeight = 80;
@@ -49,11 +54,13 @@ void CreateRandomPeopleButtonMatrix(Button buttonMatrix[5][5], Person personMatr
     x = screenSpace;
     y = 230;
 
+    defaultFont = GetFontDefault();
+
     for (i = 0; i < 5; i++)
     {
         for (j = 0; j < 5; j++)
         {
-            CreateButton(&buttonMatrix[i][j], x, y, buttonWidth, buttonHeight, personMatrix[i][j].name);
+            CreateButton(&buttonMatrix[i][j], x, y, buttonWidth, buttonHeight, personMatrix[i][j].name, defaultFont);
             x += buttonWidth + buttonSpace;
         }
 

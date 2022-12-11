@@ -4,6 +4,7 @@
         "raylib.h": "c",
         "random.h": "c",
         "stdio.h": "c",
-        "string_type.h": "c"
+        "string_type.h": "c",
+        "stdlib.h": "c"
     }
 }
