@@ -22,3 +22,4 @@ void ChangeButtonBackgroundColor(Button *, Color);
 void ChangeButtonTextColor(Button *, Color);
 void ResetAllButtonsColors(Button [5][5]);
 void ResetAllButtonsColorsExceptOne(Button [5][5], int, int);
+int UserClickedOnButton(Button);

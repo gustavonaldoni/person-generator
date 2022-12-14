@@ -169,3 +169,11 @@ void ResetAllButtonsColorsExceptOne(Button buttonMatrix[5][5], int iButton, int 
         }
     }
 }
+
+int UserClickedOnButton(Button button)
+{
+    Rectangle buttonRectangle = {button.x, button.y, button.width, button.height};
+
+    return CheckCollisionPointRec(GetMousePosition(), buttonRectangle) &&
+           IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+}

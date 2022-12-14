@@ -17,6 +17,8 @@
 
 #define FILE_PATH "randomPeople.txt"
 
+#define BUTTON_SPACE 20
+
 FILE *randomPeopleFile;
 
 Person randomPeople[MAX_PEOPLE];
@@ -24,10 +26,15 @@ Person randomPeopleMatrix[MATRIX_SIZE][MATRIX_SIZE];
 
 Button randomPeopleButtonMatrix[MATRIX_SIZE][MATRIX_SIZE];
 
+int displayPersonInformation = 0;
+
 int main(void)
 {
     Button topLeftButton = {0};
     int iButton = 0, jButton = 0;
+
+    Button *selectedButton = NULL;
+    Person *selectedPerson = NULL;
 
     srand(time(NULL));
 
@@ -46,14 +53,20 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        if (MouseIsInsideButtonsArea(topLeftButton, 20))
+        if (MouseIsInsideButtonsArea(topLeftButton, BUTTON_SPACE))
         {
             GetWhichButtonMouseIsOnTop(randomPeopleButtonMatrix, &iButton, &jButton);
 
-            ChangeButtonBackgroundColor(&randomPeopleButtonMatrix[iButton][jButton], YELLOW);
-            ChangeButtonTextColor(&randomPeopleButtonMatrix[iButton][jButton], BLACK);
+            selectedButton = &randomPeopleButtonMatrix[iButton][jButton];
+            selectedPerson = &randomPeopleMatrix[iButton][jButton];
+
+            ChangeButtonBackgroundColor(selectedButton, YELLOW);
+            ChangeButtonTextColor(selectedButton, BLACK);
 
             ResetAllButtonsColorsExceptOne(randomPeopleButtonMatrix, iButton, jButton);
+
+            if (UserClickedOnButton(*selectedButton))
+                displayPersonInformation = 1;
         }
 
         else
@@ -67,7 +80,10 @@ int main(void)
         DrawCenteredText("Created by Gustavo Azevedo Naldoni", GetScreenHeight() / 12 * 10.5, 20.0f, DARKGRAY);
         DrawCenteredText("December - 2022", GetScreenHeight() / 12 * 11, 20.0f, DARKGRAY);
 
-        DrawRandomPeopleButtonMatrix(randomPeopleButtonMatrix);
+        if (displayPersonInformation == 1)
+            DrawPersonInformation(*selectedPerson);
+        else
+            DrawRandomPeopleButtonMatrix(randomPeopleButtonMatrix);
 
         EndDrawing();
     }

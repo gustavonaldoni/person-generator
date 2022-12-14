@@ -90,3 +90,15 @@ void CreateRandomPeopleMatrix(Person peopleMatrix[5][5])
         }
     }
 }
+
+void DrawPersonInformation(Person person)
+{
+    Rectangle rectangle = {0};
+
+    rectangle.width = 0.6f * (float) GetScreenWidth();
+    rectangle.height = 0.6f * (float) GetScreenHeight();
+    rectangle.x = (GetScreenWidth() - rectangle.width) / 2;
+    rectangle.y = (GetScreenHeight() - rectangle.height) / 2 + 30;
+
+    DrawRectangleRec(rectangle, RED);
+}
