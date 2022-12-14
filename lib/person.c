@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "string_type.h"
 #include "random.h"
+#include "utils.h"
 #include "person.h"
 
 void CreatePerson(Person *person, String name, int age, String job, int height, int numberOfChildren)
@@ -91,14 +92,57 @@ void CreateRandomPeopleMatrix(Person peopleMatrix[5][5])
     }
 }
 
+void GetPersonInformationRectangle(Rectangle *rectangle)
+{
+    rectangle->width = 0.6f * (float)GetScreenWidth();
+    rectangle->height = 0.6f * (float)GetScreenHeight();
+    rectangle->x = (GetScreenWidth() - rectangle->width) / 2;
+    rectangle->y = (GetScreenHeight() - rectangle->height) / 2 + 30;
+}
+
 void DrawPersonInformation(Person person)
 {
     Rectangle rectangle = {0};
+    GetPersonInformationRectangle(&rectangle);
 
-    rectangle.width = 0.6f * (float) GetScreenWidth();
-    rectangle.height = 0.6f * (float) GetScreenHeight();
-    rectangle.x = (GetScreenWidth() - rectangle.width) / 2;
-    rectangle.y = (GetScreenHeight() - rectangle.height) / 2 + 30;
+    const int defaultSpace = 20;
 
-    DrawRectangleRec(rectangle, RED);
+    int crossSize, crossSpace;
+    int xCross, yCross;
+
+    int xSquare, ySquare;
+    int squareSize;
+
+    const char *personName;
+    float personNameHeight;
+    int yPersonName;
+
+    const char *personAge;
+    //float personAgeHeight;
+    int yPersonAge;
+
+    crossSize = 20;
+    crossSpace = 5;
+
+    xCross = rectangle.x + rectangle.width - crossSize - crossSpace;
+    yCross = rectangle.y + crossSpace;
+
+    xSquare = xCross - crossSpace;
+    ySquare = yCross - crossSpace;
+    squareSize = crossSize + 2 * crossSpace;
+
+    DrawRectangleRec(rectangle, DARKGRAY);
+    DrawSquareLines(xSquare, ySquare, squareSize, RED);
+    DrawCross(xCross, yCross, crossSize, 1.3f, RED);
+
+    personName = TextFormat("%s", person.name.content);
+    personNameHeight = MeasureTextEx(GetFontDefault(), personName, DEFAULT_INFO_FONT_SIZE + 20, DEFAULT_FONT_SPACING).y;
+    yPersonName = rectangle.y + personNameHeight + defaultSpace;
+
+    personAge = TextFormat("Age: %d years", person.age);
+    //personAgeHeight = MeasureTextEx(GetFontDefault(), personAge, DEFAULT_INFO_FONT_SIZE, DEFAULT_FONT_SPACING).y;
+    yPersonAge = yPersonName + personNameHeight + defaultSpace;
+
+    DrawCenteredText(personName, yPersonName, DEFAULT_INFO_FONT_SIZE + 20, RAYWHITE);
+    DrawCenteredText(personAge, yPersonAge, DEFAULT_INFO_FONT_SIZE, RAYWHITE);
 }

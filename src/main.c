@@ -36,6 +36,8 @@ int main(void)
     Button *selectedButton = NULL;
     Person *selectedPerson = NULL;
 
+    Person *clickedPerson = NULL;
+
     srand(time(NULL));
 
     CreateRandomPeopleMatrix(randomPeopleMatrix);
@@ -66,7 +68,10 @@ int main(void)
             ResetAllButtonsColorsExceptOne(randomPeopleButtonMatrix, iButton, jButton);
 
             if (UserClickedOnButton(*selectedButton))
+            {
+                clickedPerson = selectedPerson;
                 displayPersonInformation = 1;
+            }
         }
 
         else
@@ -81,7 +86,7 @@ int main(void)
         DrawCenteredText("December - 2022", GetScreenHeight() / 12 * 11, 20.0f, DARKGRAY);
 
         if (displayPersonInformation == 1)
-            DrawPersonInformation(*selectedPerson);
+            DrawPersonInformation(*clickedPerson);
         else
             DrawRandomPeopleButtonMatrix(randomPeopleButtonMatrix);
 

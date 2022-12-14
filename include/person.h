@@ -1,3 +1,5 @@
+#define DEFAULT_INFO_FONT_SIZE 30
+
 typedef struct
 {
     String name;
@@ -10,4 +12,5 @@ void CreatePerson(Person *, String, int, String, int, int);
 void DeletePerson(Person *);
 void CreateRandomPerson(Person *);
 void CreateRandomPeopleMatrix(Person [5][5]);
+void GetPersonInformationRectangle(Rectangle *);
 void DrawPersonInformation(Person);
