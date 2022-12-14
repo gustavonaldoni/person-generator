@@ -5,11 +5,13 @@
 #include "random.h"
 #include "person.h"
 
-void CreatePerson(Person *person, String name, int age, String job)
+void CreatePerson(Person *person, String name, int age, String job, int height, int numberOfChildren)
 {
     person->name = name;
     person->age = age;
     person->job = job;
+    person->height = height;
+    person->numberOfChildren = numberOfChildren;
 }
 
 void DeletePerson(Person *person)
@@ -72,19 +74,11 @@ void CreateRandomPerson(Person *person)
     person->name = names[nameIndex];
     person->age = GenerateRandomInt(18, 70);
     person->job = jobs[jobIndex];
+    person->height = GenerateRandomInt(150, 200);
+    person->numberOfChildren = GenerateRandomInt(0, 4);
 }
 
-void CreateRandomPeople(Person people[], int maxPeople)
-{
-    int i;
-
-    for (i = 0; i < maxPeople; i++)
-    {
-        CreateRandomPerson(&people[i]);
-    }
-}
-
-void CreateRandomPeopleMatrix(Person peopleMatrix[5][5], Person peopleArray[])
+void CreateRandomPeopleMatrix(Person peopleMatrix[5][5])
 {
     int i, j;
 
@@ -92,7 +86,7 @@ void CreateRandomPeopleMatrix(Person peopleMatrix[5][5], Person peopleArray[])
     {
         for (j = 0; j < 5; j++)
         {
-            peopleMatrix[i][j] = peopleArray[5*i + j];
+            CreateRandomPerson(&peopleMatrix[i][j]);
         }
     }
 }

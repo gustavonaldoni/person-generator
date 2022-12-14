@@ -6,17 +6,20 @@
 void AppendPersonToFile(Person person, FILE *file)
 {
     file = fopen("./randomPeople.txt", "a");
-    fprintf(file, "%s,%d,%s;", person.name.content, person.age, person.job.content);
+    fprintf(file, "%s,%d,%s,%d,%d;", person.name.content, person.age, person.job.content, person.height, person.numberOfChildren);
     fclose(file);
 }
 
-void AppendPeopleToFile(Person people[], FILE *file, int maxPeople)
+void AppendPeopleToFile(Person peopleMatrix[5][5], FILE *file)
 {
-    int i;
+    int i, j;
 
-    for (i = 0; i < maxPeople; i++)
+    for (i = 0; i < 5; i++)
     {
-        AppendPersonToFile(people[i], file);
+        for (j = 0; j < 5; j++)
+        {
+            AppendPersonToFile(peopleMatrix[i][j], file);
+        }
     }
 }
 

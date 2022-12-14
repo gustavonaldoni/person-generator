@@ -20,9 +20,8 @@
 FILE *randomPeopleFile;
 
 Person randomPeople[MAX_PEOPLE];
-Person randomPeopleCopy[MAX_PEOPLE];
-
 Person randomPeopleMatrix[MATRIX_SIZE][MATRIX_SIZE];
+
 Button randomPeopleButtonMatrix[MATRIX_SIZE][MATRIX_SIZE];
 
 int main(void)
@@ -32,11 +31,10 @@ int main(void)
 
     srand(time(NULL));
 
-    CreateRandomPeople(randomPeople, MAX_PEOPLE);
-    CreateRandomPeopleMatrix(randomPeopleMatrix, randomPeople);
+    CreateRandomPeopleMatrix(randomPeopleMatrix);
+    AppendPeopleToFile(randomPeopleMatrix, randomPeopleFile);
 
-    AppendPeopleToFile(randomPeople, randomPeopleFile, MAX_PEOPLE);
-    GetPeopleFromFile(randomPeopleCopy, MAX_PEOPLE, FILE_PATH);
+    GetPeopleFromFile(randomPeople, MAX_PEOPLE, FILE_PATH);
 
     CreateRandomPeopleButtonMatrix(randomPeopleButtonMatrix, randomPeopleMatrix);
     topLeftButton = randomPeopleButtonMatrix[0][0];
