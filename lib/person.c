@@ -100,10 +100,11 @@ void GetPersonInformationRectangle(Rectangle *rectangle)
     rectangle->y = (GetScreenHeight() - rectangle->height) / 2 + 30;
 }
 
-void DrawPersonInformation(Person person)
+void DrawPersonInformation(Person person, Rectangle *crossSquare)
 {
     Rectangle rectangle = {0};
     GetPersonInformationRectangle(&rectangle);
+    const int rectangleBorderSpace = 5;
 
     const int defaultSpace = 20;
 
@@ -113,36 +114,71 @@ void DrawPersonInformation(Person person)
     int xSquare, ySquare;
     int squareSize;
 
-    const char *personName;
+    const char *personName = NULL;
     float personNameHeight;
     int yPersonName;
 
-    const char *personAge;
-    //float personAgeHeight;
-    int yPersonAge;
+    const char *personAgeAndHeight = NULL;
+    float personAgeAndHeightHeight;
+    int yPersonAgeAndHeight;
+
+    const char *personJob = NULL;
+    float personJobHeight;
+    int yPersonJob;
+
+    const char *personNumberOfChildren = NULL;
+    //float personNumberOfChildrenHeight;
+    int yPersonNumberOfChildren;
+
+    const char *quitInformation = NULL;
+    float quitInformationHeight;
+    int yQuitInformation;
 
     crossSize = 20;
     crossSpace = 5;
 
-    xCross = rectangle.x + rectangle.width - crossSize - crossSpace;
-    yCross = rectangle.y + crossSpace;
-
-    xSquare = xCross - crossSpace;
-    ySquare = yCross - crossSpace;
+    xSquare = rectangle.x + rectangle.width - crossSize - 2 * crossSpace - rectangleBorderSpace;
+    ySquare = rectangle.y + rectangleBorderSpace;
     squareSize = crossSize + 2 * crossSpace;
 
+    *crossSquare = (Rectangle){xSquare, ySquare, squareSize, squareSize};
+
+    xCross = xSquare + rectangleBorderSpace;
+    yCross = ySquare + rectangleBorderSpace;
+
     DrawRectangleRec(rectangle, DARKGRAY);
-    DrawSquareLines(xSquare, ySquare, squareSize, RED);
-    DrawCross(xCross, yCross, crossSize, 1.3f, RED);
+    DrawSquareLines(xSquare, ySquare, squareSize, YELLOW);
+    DrawCross(xCross, yCross, crossSize, 1.5f, YELLOW);
 
-    personName = TextFormat("%s", person.name.content);
+    personName = person.name.content;
     personNameHeight = MeasureTextEx(GetFontDefault(), personName, DEFAULT_INFO_FONT_SIZE + 20, DEFAULT_FONT_SPACING).y;
-    yPersonName = rectangle.y + personNameHeight + defaultSpace;
+    yPersonName = rectangle.y + personNameHeight + 2 * defaultSpace;
 
-    personAge = TextFormat("Age: %d years", person.age);
-    //personAgeHeight = MeasureTextEx(GetFontDefault(), personAge, DEFAULT_INFO_FONT_SIZE, DEFAULT_FONT_SPACING).y;
-    yPersonAge = yPersonName + personNameHeight + defaultSpace;
+    personAgeAndHeight = TextFormat("%d years - %d cm", person.age, person.height);
+    personAgeAndHeightHeight = MeasureTextEx(GetFontDefault(), personAgeAndHeight, DEFAULT_INFO_FONT_SIZE, DEFAULT_FONT_SPACING).y;
+    yPersonAgeAndHeight = yPersonName + personNameHeight + defaultSpace;
+
+    personJob = TextFormat("%s", person.job.content);
+    personJobHeight = MeasureTextEx(GetFontDefault(), personJob, DEFAULT_INFO_FONT_SIZE, DEFAULT_FONT_SPACING).y;
+    yPersonJob = yPersonAgeAndHeight + personAgeAndHeightHeight + defaultSpace;
+
+    personNumberOfChildren = TextFormat("%d children", person.numberOfChildren);
+    //personNumberOfChildrenHeight = MeasureTextEx(GetFontDefault(), personNumberOfChildren, DEFAULT_INFO_FONT_SIZE, DEFAULT_FONT_SPACING).y;
+    yPersonNumberOfChildren = yPersonJob + personJobHeight + defaultSpace;
+
+    quitInformation = TextFormat("Left click the yellow cross to return.");
+    quitInformationHeight = MeasureTextEx(GetFontDefault(), quitInformation, DEFAULT_INFO_FONT_SIZE / 2, DEFAULT_FONT_SPACING).y;
+    yQuitInformation = rectangle.y + rectangle.height - quitInformationHeight - 4 * defaultSpace;
 
     DrawCenteredText(personName, yPersonName, DEFAULT_INFO_FONT_SIZE + 20, RAYWHITE);
-    DrawCenteredText(personAge, yPersonAge, DEFAULT_INFO_FONT_SIZE, RAYWHITE);
+    DrawCenteredText(personAgeAndHeight, yPersonAgeAndHeight, DEFAULT_INFO_FONT_SIZE, RAYWHITE);
+    DrawCenteredText(personJob, yPersonJob, DEFAULT_INFO_FONT_SIZE, RAYWHITE);
+    DrawCenteredText(personNumberOfChildren, yPersonNumberOfChildren, DEFAULT_INFO_FONT_SIZE, RAYWHITE);
+    DrawCenteredText(quitInformation, yQuitInformation, (float)DEFAULT_INFO_FONT_SIZE / 1.5f, YELLOW);
+}
+
+int UserClickedOnCrossSquare(Rectangle crossSquare)
+{
+    return CheckCollisionPointRec(GetMousePosition(), crossSquare) &&
+           IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }

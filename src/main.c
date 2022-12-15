@@ -38,6 +38,8 @@ int main(void)
 
     Person *clickedPerson = NULL;
 
+    Rectangle crossSquare = {0};
+
     srand(time(NULL));
 
     CreateRandomPeopleMatrix(randomPeopleMatrix);
@@ -55,7 +57,8 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        if (MouseIsInsideButtonsArea(topLeftButton, BUTTON_SPACE))
+        if (MouseIsInsideButtonsArea(topLeftButton, BUTTON_SPACE) &&
+            displayPersonInformation == 0)
         {
             GetWhichButtonMouseIsOnTop(randomPeopleButtonMatrix, &iButton, &jButton);
 
@@ -75,9 +78,7 @@ int main(void)
         }
 
         else
-        {
             ResetAllButtonsColors(randomPeopleButtonMatrix);
-        }
 
         DrawCenteredText("Random people generator!", GetScreenHeight() / 12, 50.0f, DARKGRAY);
         DrawCenteredText("Please click on one person to show it's information.", GetScreenHeight() / 12 * 2, 30.0f, DARKGRAY);
@@ -86,7 +87,12 @@ int main(void)
         DrawCenteredText("December - 2022", GetScreenHeight() / 12 * 11, 20.0f, DARKGRAY);
 
         if (displayPersonInformation == 1)
-            DrawPersonInformation(*clickedPerson);
+        {
+            DrawPersonInformation(*clickedPerson, &crossSquare);
+
+            if (UserClickedOnCrossSquare(crossSquare))
+                displayPersonInformation = 0;
+        }
         else
             DrawRandomPeopleButtonMatrix(randomPeopleButtonMatrix);
 

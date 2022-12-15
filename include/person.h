@@ -1,4 +1,4 @@
-#define DEFAULT_INFO_FONT_SIZE 30
+#define DEFAULT_INFO_FONT_SIZE 40
 
 typedef struct
 {
@@ -13,4 +13,5 @@ void DeletePerson(Person *);
 void CreateRandomPerson(Person *);
 void CreateRandomPeopleMatrix(Person [5][5]);
 void GetPersonInformationRectangle(Rectangle *);
-void DrawPersonInformation(Person);
+void DrawPersonInformation(Person, Rectangle *);
+int UserClickedOnCrossSquare(Rectangle);
