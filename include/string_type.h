@@ -1,3 +1,7 @@
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
 typedef struct
 {
     char *content;
@@ -22,5 +26,7 @@ int stringCounts(String, String);
 String stringReverse(String);
 int stringFirstIndexOf(String, char);
 int stringLastIndexOf(String, char);
+int stringCutIndexOf(String, char, int, int);
 String stringCreateEmpty();
 int stringIsEmpty(String);
+String *stringSplit(String, char *, int *);

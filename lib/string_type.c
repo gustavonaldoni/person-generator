@@ -1,6 +1,3 @@
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include "string_type.h"
 
 String stringCreate(char *string)
@@ -516,7 +513,10 @@ String stringReverse(String string)
     lengthString = stringLength(string);
 
     if (lengthString == 0)
+    {
+        resultString = stringCreateEmpty();
         return resultString;
+    }
 
     resultContent = (char *)malloc(lengthString + 1);
 
@@ -544,6 +544,32 @@ int stringFirstIndexOf(String string, char character)
     resultIndex = -1;
 
     for (i = 0; i < lengthString; i++)
+    {
+        if (string.content[i] == character)
+        {
+            resultIndex = (int)i;
+            return resultIndex;
+        }
+    }
+
+    return resultIndex;
+}
+
+int stringCutIndexOf(String string, char character, int startIndex, int endIndex)
+{
+    size_t lengthString, i;
+    int resultIndex;
+
+    lengthString = stringLength(string);
+    resultIndex = -1;
+
+    if (startIndex >= lengthString || startIndex > endIndex)
+        return resultIndex;
+
+    if (endIndex >= lengthString || endIndex < startIndex)
+        return resultIndex;
+
+    for (i = startIndex; i < endIndex + 1; i++)
     {
         if (string.content[i] == character)
         {
@@ -584,5 +610,47 @@ int stringIsEmpty(String string)
 
     stringDestroy(&emptyString);
 
+    return result;
+}
+
+String *stringSplit(String string, char *separator, int *resultArraySize)
+{
+    String copy;
+    unsigned int counter;
+    char *token;
+    String *result;
+    int i;
+
+    copy.content = NULL;
+    counter = 0;
+    token = NULL;
+    result = NULL;
+
+    copy = stringCopy(string);
+
+    token = strtok(string.content, separator);
+    while (token != NULL)
+    {
+        counter++;
+        token = strtok(NULL, separator);
+    }
+
+    token = NULL;
+    result = (String *) malloc(counter * sizeof(String));
+
+    if (result == NULL)
+        return NULL;
+
+    token = strtok(copy.content, separator);
+
+    i = 0;
+    while (token != NULL)
+    {
+        result[i] = stringCreate(token);
+        token = strtok(NULL, separator);
+        i++;
+    }
+
+    *resultArraySize = counter;
     return result;
 }
